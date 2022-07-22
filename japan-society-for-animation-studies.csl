@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" default-locale="ja-JP">
+  <info>
+    <title>日本アニメーション学会 (Japan Society for Animation Studies) (日本語)</title>
+    <id>https://github.com/tatsu38/japan-society-for-animation-studies-csl</id>
+    <link href="https://github.com/tatsu38/tatsu38/japan-society-for-animation-studies-csl" rel="self" />
+    <link href="https://www.jsas.net/" rel="documentation" />
+    <link href="https://www.jsas.net/wp/wp-content/uploads/2019/01/bibliography-2.pdf" rel="documentation" />
+    <author>
+      <name>TATSUZAWA Satoshi</name>
+      <email>tatsuzawa@gmail.com</email>
+    </author>
+    <category citation-format="author-date" />
+    <category field="law" />
+    <issn>1347-300X</issn>
+    <updated>2022-07-22T16:56:00+09:00</updated>
+    <rights license="https://creativecommons.org/share-your-work/public-domain/cc0">CC0 - Creative Commons</rights>
+  </info>
+  <macro name="abbr_author">
+    <names variable="editor" suffix="編">
+      <name delimiter="編、" et-al-min="3" et-al-use-first="1" />
+    </names>
+    <names variable="author">
+      <name delimiter="、" et-al-min="3" et-al-use-first="1" />
+    </names>
+  </macro>
+  <macro name="full_author">
+    <names variable="editor" suffix="編">
+      <name delimiter="編、" />
+    </names>
+    <names variable="author">
+      <name delimiter="、" />
+    </names>
+  </macro>
+  <macro name="translator">
+    <names variable="translator" suffix="訳">
+      <name delimiter="訳、" />
+    </names>
+  </macro>
+  <macro name="title">
+    <choose>
+      <if type="book">
+        <text variable="title" prefix="『" suffix="』" />
+      </if>
+      <else>
+        <text variable="title" prefix="「" suffix="」" />
+      </else>
+    </choose>
+  </macro>
+  <macro name="publisher">
+    <text variable="publisher" />
+  </macro>
+  <macro name="volume">
+    <text variable="volume" prefix="第" suffix="巻" />
+  </macro>
+  <macro name="issue">
+    <text variable="issue" prefix="第" suffix="号" />
+  </macro>
+  <macro name="pageno">
+    <text variable="page" />
+  </macro>
+  <macro name="container">
+    <text variable="container-title" prefix="『" suffix="』" />
+  </macro>
+  <macro name="issued_year">
+    <date variable="issued">
+      <date-part name="year" />
+    </date>
+  </macro>
+  <macro name="issued_month_day">
+    <date variable="issued">
+      <date-part name="month" suffix="月" form="numeric" />
+      <date-part name="day" suffix="日" />
+    </date>
+  </macro>
+  <macro name="issued">
+    <date variable="issued">
+      <date-part name="year" suffix="年" />
+      <date-part name="month" suffix="月" form="numeric" />
+      <date-part name="day" suffix="日" />
+    </date>
+  </macro>
+  <macro name="accessed">
+    <date variable="accessed">
+      <date-part name="year" suffix="年" />
+      <date-part name="month" suffix="月" form="numeric" />
+      <date-part name="day" suffix="日" />
+    </date>
+  </macro>
+  <citation>
+    <layout>
+      <group delimiter=" " suffix="。">
+        <text macro="abbr_author" />
+        <text macro="issued_year" prefix="（" suffix="）" />
+      </group>
+    </layout>
+  </citation>
+  <bibliography>
+    <sort>
+      <key macro="author" />
+      <key macro="issued_year" />
+    </sort>
+    <layout>
+      <group delimiter="" suffix="。">
+        <choose>
+          <if type="book chapter article-journal article-magazine article-newspaper webpage thesis speech" match="any">
+            <text macro="full_author" />
+            <text macro="issued_year" prefix="（" suffix="）" />
+            <text macro="title" />
+            <text macro="translator" suffix="、" />
+            <choose>
+              <if type="book">
+                <text macro="publisher" />
+              </if>
+              <else-if type="chapter article-journal article-magazine article-newspaper webpage" match="any">
+                <text macro="container" prefix="、" />
+                <choose>
+                  <if type="article-journal article-magazine article-newspaper" match="any">
+                    <text macro="volume" />
+                    <text macro="issue" />
+                    <choose>
+                      <if type="article-newspaper">
+                        <text macro="issued" suffix="付" />
+                      </if>
+                    </choose>
+                  </if>
+                </choose>
+                <text macro="pageno" prefix="、" />
+                <choose>
+                  <if type="webpage">
+                    <text variable="URL" prefix="、" />
+                    <text macro="accessed" prefix="（" suffix="確認）" />
+                  </if>
+                </choose>
+              </else-if>
+              <else-if type="thesis">
+                <text variable="genre" />
+                <text macro="publisher" prefix="、" />
+              </else-if>
+              <else-if type="speech">
+                <text variable="event" />
+                <text variable="event-place" prefix="、" />
+                <text macro="issued_month_day" prefix="、" />
+              </else-if>
+            </choose>
+          </if>
+          <else-if type="webpage">
+            <text macro="full_author" />
+            <text macro="title" />
+            <text macro="translator" suffix="、" />
+            <text macro="publisher" />
+            <text macro="webpage_suffix" />
+          </else-if>
+          <else>
+            <text macro="title" />
+          </else>
+        </choose>
+      </group>
+    </layout>
+  </bibliography>
+</style>
