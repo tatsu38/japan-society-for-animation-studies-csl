@@ -17,19 +17,19 @@
     <rights license="https://creativecommons.org/share-your-work/public-domain/cc0">CC0 - Creative Commons</rights>
   </info>
   <macro name="abbr_author">
-    <names variable="editor" suffix="編">
-      <name delimiter="編、" et-al-min="3" et-al-use-first="1" />
-    </names>
     <names variable="author">
       <name delimiter="、" et-al-min="3" et-al-use-first="1" />
     </names>
+    <names variable="editor" suffix="編">
+      <name delimiter="編、" et-al-min="3" et-al-use-first="1" />
+    </names>
   </macro>
   <macro name="full_author">
-    <names variable="editor" suffix="編">
-      <name delimiter="編、" />
-    </names>
     <names variable="author">
       <name delimiter="、" />
+    </names>
+    <names variable="editor" suffix="編">
+      <name delimiter="編、" />
     </names>
   </macro>
   <macro name="translator">
@@ -37,30 +37,63 @@
       <name delimiter="訳、" />
     </names>
   </macro>
-  <macro name="title">
+  <macro name="volume-issue-and-issued">
+    <text variable="volume" prefix="第" suffix="巻" />
+    <text variable="issue" prefix="第" suffix="号" />
     <choose>
-      <if type="book">
-        <text variable="title" prefix="『" suffix="』" />
+      <if type="article-newspaper">
+        <text macro="issued" suffix="付" />
+      </if>
+    </choose>
+  </macro>
+  <macro name="collection">
+    <text variable="collection-title" />
+    <text variable="collection-number" prefix=" " />
+  </macro>
+  <macro name="title-etc">
+    <choose>
+      <if variable="container-title">
+        <text variable="title" prefix="「" suffix="」" />
+        <text macro="translator" />
+        <text variable="container-title" prefix="、『" suffix="』" />
+        <choose>
+          <if variable="edition collection-title collection-number" match="any">
+            <text macro="volume-issue-and-issued" />
+          </if>
+          <else>
+            <text macro="volume-issue-and-issued" suffix="、" />
+          </else>
+        </choose>
+        <text variable="edition" prefix="［" suffix="］" />
+        <text macro="collection" prefix="（" suffix="）" />
       </if>
       <else>
-        <text variable="title" prefix="「" suffix="」" />
+        <text variable="title" prefix="『" suffix="』" />
+        <choose>
+          <if variable="edition collection-title collection-number" match="any">
+            <text macro="volume-issue-and-issued" />
+          </if>
+          <else>
+            <text macro="volume-issue-and-issued" suffix="、" />
+          </else>
+        </choose>
+        <text variable="edition" prefix="［" suffix="］" />
+        <text macro="collection" prefix="（" suffix="）" />
+        <text macro="translator" suffix="、" />
       </else>
     </choose>
   </macro>
-  <macro name="publisher">
-    <text variable="publisher" />
-  </macro>
-  <macro name="volume">
-    <text variable="volume" prefix="第" suffix="巻" />
-  </macro>
-  <macro name="issue">
-    <text variable="issue" prefix="第" suffix="号" />
-  </macro>
-  <macro name="pageno">
-    <text variable="page" />
-  </macro>
-  <macro name="container">
-    <text variable="container-title" prefix="『" suffix="』" />
+  <macro name="publisher-and-page">
+    <choose>
+      <if variable="publisher page">
+        <text variable="publisher" />
+        <text variable="page" prefix="、" />
+      </if>
+      <else>
+        <text variable="publisher" />
+        <text variable="page" />
+      </else>
+    </choose>
   </macro>
   <macro name="issued_year">
     <date variable="issued">
@@ -106,51 +139,25 @@
           <if type="book chapter article-journal article-magazine article-newspaper webpage thesis speech" match="any">
             <text macro="full_author" />
             <text macro="issued_year" prefix="（" suffix="）" />
-            <text macro="title" />
-            <text macro="translator" suffix="、" />
+            <text macro="title-etc" />
             <choose>
-              <if type="book">
-                <text macro="publisher" />
+              <if type="thesis">
+                <text variable="genre" suffix="、" />
               </if>
-              <else-if type="chapter article-journal article-magazine article-newspaper webpage" match="any">
-                <text macro="container" prefix="、" />
-                <choose>
-                  <if type="article-journal article-magazine article-newspaper" match="any">
-                    <text macro="volume" />
-                    <text macro="issue" />
-                    <choose>
-                      <if type="article-newspaper">
-                        <text macro="issued" suffix="付" />
-                      </if>
-                    </choose>
-                  </if>
-                </choose>
-                <text macro="pageno" prefix="、" />
-                <choose>
-                  <if type="webpage">
-                    <text variable="URL" prefix="、" />
-                    <text macro="accessed" prefix="（" suffix="確認）" />
-                  </if>
-                </choose>
-              </else-if>
-              <else-if type="thesis">
-                <text variable="genre" />
-                <text macro="publisher" prefix="、" />
-              </else-if>
               <else-if type="speech">
-                <text variable="event" />
+                <text variable="event-title" />
                 <text variable="event-place" prefix="、" />
                 <text macro="issued_month_day" prefix="、" />
               </else-if>
             </choose>
+            <text macro="publisher-and-page" />
+            <choose>
+              <if type="webpage">
+                <text variable="URL" prefix="、" />
+                <text macro="accessed" prefix="（" suffix="確認）" />
+              </if>
+            </choose>
           </if>
-          <else-if type="webpage">
-            <text macro="full_author" />
-            <text macro="title" />
-            <text macro="translator" suffix="、" />
-            <text macro="publisher" />
-            <text macro="webpage_suffix" />
-          </else-if>
           <else>
             <text macro="title" />
           </else>
