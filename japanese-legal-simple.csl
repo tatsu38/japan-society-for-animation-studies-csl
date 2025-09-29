@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="note" version="1.0" default-locale="ja-JP">
+  <info>
+    <title>Japanese Legal Simple (シンプル日本判例引用)</title>
+    <title-short>JL-Simple</title-short>
+    <id>http://www.zotero.org/styles/japanese-legal-simple</id>
+    <link href="http://www.zotero.org/styles/japanese-legal-simple" rel="self"/>
+    <author>
+      <name>TATSUZAWA Satoshi</name>
+      <email>tatsuzawa@gmail.com</email>
+    </author>
+    <category citation-format="note"/>
+    <category field="law"/>
+    <summary>シンプルな日本判例・審決引用スタイル</summary>
+    <updated>2025-01-01T00:00:00+00:00</updated>
+    <rights license="https://creativecommons.org/share-your-work/public-domain/cc0">CC0 - Creative Commons</rights>
+  </info>
+  <!-- マクロ定義 -->
+  <macro name="issued-date">
+    <date variable="issued">
+      <date-part name="year" form="long" suffix="年"/>
+      <date-part name="month" form="numeric" suffix="月"/>
+      <date-part name="day" suffix="日"/>
+    </date>
+  </macro>
+  <!-- 脚注引用 -->
+  <citation>
+    <layout delimiter="、">
+      <choose>
+        <if type="legal_case">
+          <text variable="authority"/>
+          <text macro="issued-date"/>
+          <text variable="number" prefix="・"/>
+          <text variable="title" prefix="「" suffix="」"/>
+        </if>
+        <else>
+          <text variable="title"/>
+        </else>
+      </choose>
+    </layout>
+  </citation>
+  <!-- 参考文献リスト -->
+  <bibliography>
+    <sort>
+      <key variable="issued"/>
+    </sort>
+    <layout suffix="。">
+      <choose>
+        <if type="legal_case">
+          <text variable="authority"/>
+          <text variable="title" prefix="「" suffix="」"/>
+          <text macro="issued-date"/>
+          <text variable="number" prefix="・"/>
+        </if>
+        <else>
+          <text variable="title"/>
+        </else>
+      </choose>
+    </layout>
+  </bibliography>
+</style>
