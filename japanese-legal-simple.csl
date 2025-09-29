@@ -15,6 +15,7 @@
     <updated>2025-01-01T00:00:00+00:00</updated>
     <rights license="https://creativecommons.org/share-your-work/public-domain/cc0">CC0 - Creative Commons</rights>
   </info>
+  
   <!-- マクロ定義 -->
   <macro name="issued-date">
     <date variable="issued">
@@ -23,15 +24,23 @@
       <date-part name="day" suffix="日"/>
     </date>
   </macro>
+  
   <!-- 脚注引用 -->
   <citation>
     <layout delimiter="、">
       <choose>
         <if type="legal_case">
-          <text variable="authority"/>
-          <text macro="issued-date"/>
-          <text variable="number" prefix="・"/>
-          <text variable="title" prefix="「" suffix="」"/>
+          <group delimiter="">
+            <text variable="authority"/>
+            <text variable="title" prefix="「" suffix="」"/>
+            <text macro="issued-date"/>
+            <text variable="number" prefix="・"/>
+            <group prefix="、">
+              <text variable="container-title"/>
+              <text variable="volume" suffix="巻"/>
+              <text variable="page" suffix="ページ"/>
+            </group>
+          </group>
         </if>
         <else>
           <text variable="title"/>
@@ -39,6 +48,7 @@
       </choose>
     </layout>
   </citation>
+  
   <!-- 参考文献リスト -->
   <bibliography>
     <sort>
@@ -47,10 +57,17 @@
     <layout suffix="。">
       <choose>
         <if type="legal_case">
-          <text variable="authority"/>
-          <text variable="title" prefix="「" suffix="」"/>
-          <text macro="issued-date"/>
-          <text variable="number" prefix="・"/>
+          <group delimiter="">
+            <text variable="authority"/>
+            <text variable="title" prefix="「" suffix="」"/>
+            <text macro="issued-date"/>
+            <text variable="number" prefix="・"/>
+            <group prefix="、">
+              <text variable="container-title"/>
+              <text variable="volume" suffix="巻"/>
+              <text variable="page" suffix="ページ"/>
+            </group>
+          </group>
         </if>
         <else>
           <text variable="title"/>
